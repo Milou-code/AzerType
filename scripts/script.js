@@ -14,7 +14,19 @@ function afficherProposition(text) {
     }
 }
 
+/**
+ * Cette fonction construit et affiche l'email. 
+ * @param {string} nom : le nom du joueur
+ * @param {string} email : l'email de la personne avec qui il veut partager son score
+ * @param {string} score : le score. 
+ */
+function afficherEmail(nom, email, score) {
+    let mailto = `mailto:${email}?subject=Partage du score Azertype&body=Salut, je suis ${nom} et je viens de réaliser le score ${score} sur le site d'Azertype !`
+    location.href = mailto
+}
+
 function lancerJeu() {
+    initAddEventListenerPopup()
     let score = 0;
     let i = 0;
     let listePropostions = listeMots;
@@ -39,6 +51,14 @@ function lancerJeu() {
             afficherProposition(listePropostions[i])
         })
     }
+
+    let form = document.querySelector('form')
+        form.addEventListener("submit", (event) => {
+            event.preventDefault()
+            let nom = document.getElementById("nom")
+            let email = document.getElementById("email")
+            afficherEmail(nom.value, email.value, String(score))
+        })
 
     let inputEcriture = document.getElementById("inputEcriture");
     let btnValiderMot = document.getElementById("btnValiderMot");
