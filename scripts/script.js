@@ -15,15 +15,46 @@ function afficherProposition(text) {
 }
 
 function validerNom(nom) {
-    const regex = new RegExp("\\w{2}")
-    const resultat = regex.test(nom)
-    return resultat
+    if (nom.length < 2) {
+        throw new Error(`Le nom ${nom} est trop court`)
+    }
 }
 
 function validerEmail(email) {
     const regex = new RegExp("[a-z0-9._-]+@[a-z0-9._-]+\\.[a-z0-9._-]+")
     const resultat = regex.test(email)
-    return resultat
+    if (!resultat) {
+        throw new Error("L'e-mail n'est pas valide")
+    }
+}
+
+function afficherMessageErreur(messageErreur) {
+    let spanMessageErreur = document.getElementById("messageErreur")
+    if (spanMessageErreur === null) {
+        let divPopup = document.querySelector(".popup")
+        spanMessageErreur = document.createElement("span")
+        spanMessageErreur.id = "messageErreur"
+        spanMessageErreur.style.color = "red"
+        spanMessageErreur.textContent = messageErreur
+        divPopup.appendChild(spanMessageErreur)
+    }
+    else {
+        spanMessageErreur.textContent = messageErreur
+    }
+}
+
+function gererFormulaire(scoreEmail) {
+    let nom = document.getElementById("nom").value.trim()
+    let email = document.getElementById("email").value.trim()
+    try {
+        validerNom(nom)
+        validerEmail(email)
+        afficherEmail(nom, email, scoreEmail)
+        cacherPopup()
+    }
+    catch(erreur) {
+        afficherMessageErreur(erreur.message)
+    }
 }
 
 /**
@@ -66,17 +97,9 @@ function lancerJeu() {
 
     let form = document.querySelector('form')
         form.addEventListener("submit", (event) => {
-            event.preventDefault()
-            let nom = document.getElementById("nom").value.trim()
-            let email = document.getElementById("email").value.trim()
+            event.preventDefault() // empêche la réactualisation de la page
             let scoreEmail = `${score}/${i}`
-            if (validerNom(nom) && validerEmail(email)) {
-                afficherEmail(nom, email, scoreEmail)
-                cacherPopup()
-            }
-            else {
-                console.log("L'une des informations saisies était incorrecte")
-            }
+            gererFormulaire(scoreEmail)
         })
 
     let inputEcriture = document.getElementById("inputEcriture");

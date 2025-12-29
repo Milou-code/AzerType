@@ -24,6 +24,14 @@ function cacherPopup() {
     // La popup est masquée par défaut (display:none), supprimer la classe "active"
     // va rétablir cet affichage par défaut. 
     popupBackground.classList.remove("active")
+    const messageErreur = document.getElementById("messageErreur")
+    if (messageErreur) {
+        messageErreur.remove() // si le message d'erreur existe on le supprime
+    }
+    const inputNom = document.getElementById("nom")
+    inputNom.value = ""
+    const inputEmail = document.getElementById("email")
+    inputEmail.value = ""
 }
 
 
