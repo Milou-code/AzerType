@@ -14,6 +14,18 @@ function afficherProposition(text) {
     }
 }
 
+function validerNom(nom) {
+    const regex = new RegExp("\\w{2}")
+    const resultat = regex.test(nom)
+    return resultat
+}
+
+function validerEmail(email) {
+    const regex = new RegExp("[a-z0-9._-]+@[a-z0-9._-]+\\.[a-z0-9._-]+")
+    const resultat = regex.test(email)
+    return resultat
+}
+
 /**
  * Cette fonction construit et affiche l'email. 
  * @param {string} nom : le nom du joueur
@@ -55,9 +67,16 @@ function lancerJeu() {
     let form = document.querySelector('form')
         form.addEventListener("submit", (event) => {
             event.preventDefault()
-            let nom = document.getElementById("nom")
-            let email = document.getElementById("email")
-            afficherEmail(nom.value, email.value, String(score))
+            let nom = document.getElementById("nom").value.trim()
+            let email = document.getElementById("email").value.trim()
+            let scoreEmail = `${score}/${i}`
+            if (validerNom(nom) && validerEmail(email)) {
+                afficherEmail(nom, email, scoreEmail)
+                cacherPopup()
+            }
+            else {
+                console.log("L'une des informations saisies était incorrecte")
+            }
         })
 
     let inputEcriture = document.getElementById("inputEcriture");
