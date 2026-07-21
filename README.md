@@ -26,7 +26,7 @@ Le projet est organisé de la manière suivante :
 ## ⚙️ Installation
 1.  Clonez ce dépôt sur votre machine locale :
     ```bash
-    git clone [https://github.com/votre-pseudo/votre-repo.git](https://github.com/votre-pseudo/votre-repo.git)
+    git clone [https://github.com/Milou-code/AzerType](https://github.com/Milou-code/AzerType)
     ```
 2.  Ouvrez le fichier `index.html` dans votre navigateur préféré.
 
